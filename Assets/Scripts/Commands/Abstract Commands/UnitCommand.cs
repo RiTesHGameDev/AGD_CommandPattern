@@ -1,12 +1,19 @@
-﻿using System;
-
-public abstract class UnitCommand : ICommand
+﻿using Command.Player;
+using System;
+namespace Command.Commands
 {
-    public int ActorUnitID;
-    public int TargetUnitID;
+    public abstract class UnitCommand : ICommand
+    {
+        public CommandData commandData;
 
-    public int ActorPlayerID;
-    public int TargetPlayerID;
-    public abstract void Execute();
-    public abstract bool WillHitTarget();
+        protected UnitController actorUnit;
+        protected UnitController targetUnit;
+
+        public abstract void Execute();
+        public abstract bool WillHitTarget();
+
+        public void SetActorUnit(UnitController actorUnit) => this.actorUnit = actorUnit;
+
+        public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
+    }
 }
