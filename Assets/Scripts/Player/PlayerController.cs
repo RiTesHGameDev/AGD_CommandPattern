@@ -89,7 +89,19 @@ namespace Command.Player
         {
             units[activeUnitIndex].ResetUnitIndicator();
             activeUnitIndex--;
-            units[activeUnitIndex].StartUnitTurn();
+
+            while (activeUnitIndex >= 0)
+            {
+                if(!units[activeUnitIndex].IsAlive())
+                {
+                    activeUnitIndex--;
+                }
+                else
+                {
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
         }
 
         internal void ProcessUnitCommand(UnitCommand commandToProcess)
