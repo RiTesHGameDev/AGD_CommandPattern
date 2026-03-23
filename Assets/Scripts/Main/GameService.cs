@@ -30,6 +30,7 @@ namespace Command.Main
         public InputService InputService { get; private set; }
         public BattleService BattleService { get; private set; }
         public PlayerService PlayerService { get; private set; }
+        public CommandInvoker CommandInvoker { get; internal set; }
 
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
@@ -51,10 +52,11 @@ namespace Command.Main
             BattleService = new BattleService(battleScriptableObjects);
             PlayerService = new PlayerService();
             uiService.Init(battleScriptableObjects.Count);
+            CommandInvoker = new CommandInvoker();
         }
 
         private void Update() => InputService.UpdateInputService();
 
-        public void ProcessUnitCommand(UnitCommand commandToProcess)=> PlayerService.ProccessUnitCommand(commandToProcess as UnitCommand);
+        public void ProcessUnitCommand(ICommand commandToProcess)=> PlayerService.ProccessUnitCommand(commandToProcess as UnitCommand);
     }
 }

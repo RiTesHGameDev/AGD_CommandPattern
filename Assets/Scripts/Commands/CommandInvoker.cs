@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace Command.Commands
 {
 	public class CommandInvoker
@@ -11,5 +12,5 @@ namespace Command.Commands
 		}
 		public void ExecuteCommand(ICommand commandToExecute) => commandToExecute.Execute();
 		public void RegisterCommand(ICommand commandToRegister) => commandRegistry.Push(commandToRegister);
-	}
+    }
 }

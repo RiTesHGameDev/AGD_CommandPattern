@@ -66,8 +66,6 @@ namespace Command.Player
 
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
-        public void PerformAction(CommandType commandSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(commandSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit);
-
         public void PlayerDied(PlayerController deadPlayer)
         {
             int winnerId;
@@ -98,9 +96,19 @@ namespace Command.Player
                 PlayerDied(player2);
         }
 
-        internal void ProccessUnitCommand(UnitCommand unitCommand)
+        internal void ProccessUnitCommand(UnitCommand commandToProcess)
         {
-            throw new NotImplementedException();
+            SetUnitReferences(commandToProcess);
+            GetPlayerById(commandToProcess.commandData.ActorPlayerID).ProcessUnitCommand(commandToProcess);
+        }
+
+        private void SetUnitReferences(UnitCommand commandToProcess)
+        {
+            var actorUnit = GetPlayerById(commandToProcess.commandData.ActorPlayerID).GetUnitByID(commandToProcess.commandData.ActorUnitID);
+            var targetUnit = GetPlayerById(commandToProcess.commandData.TargetPlayerID).GetUnitByID(commandToProcess.commandData.TargetUnitID);
+
+            commandToProcess.SetActorUnit(actorUnit);
+            commandToProcess.SetTargetUnit(targetUnit);
         }
     }
 }
