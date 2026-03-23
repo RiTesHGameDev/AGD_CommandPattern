@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Command.Main;
+using System;
 using System.Collections.Generic;
 namespace Command.Commands
 {
@@ -12,5 +13,29 @@ namespace Command.Commands
 		}
 		public void ExecuteCommand(ICommand commandToExecute) => commandToExecute.Execute();
 		public void RegisterCommand(ICommand commandToRegister) => commandRegistry.Push(commandToRegister);
+
+		public void Undo()
+		{
+			if(!RegistryEmpty() && CommandBelongsToActivePlayer())
+			commandRegistry.Pop().Undo();
+		}
+
+		private bool RegistryEmpty() => commandRegistry.Count == 0;
+
+        private bool CommandBelongsToActivePlayer()
+        {
+            if (RegistryEmpty())
+            {
+                return false;
+            }
+
+            var unitCommand = commandRegistry.Peek() as UnitCommand;
+            if (unitCommand == null)
+            {
+                return false;
+            }
+
+            return unitCommand.commandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
+        }
     }
 }
