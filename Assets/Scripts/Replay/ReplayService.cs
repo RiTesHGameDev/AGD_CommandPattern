@@ -11,7 +11,7 @@ namespace Replay
         private Stack<ICommand> replayCommandStack;
         public ReplayState replayState { get; private set; }
 
-        public ReplayService() => SetReplayState(ReplayState.ACTIVE);
+        public ReplayService() => SetReplayState(ReplayState.DEACTIVE);
         public void SetReplayState(ReplayState stateToSet) => replayState = stateToSet;
 
         public void SetCommandStack(Stack<ICommand> commandToSet) => replayCommandStack = new Stack<ICommand>(commandToSet);

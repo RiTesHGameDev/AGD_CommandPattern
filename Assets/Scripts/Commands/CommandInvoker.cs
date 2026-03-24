@@ -10,12 +10,6 @@ namespace Command.Commands
 
         private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
 
-        private void SetReplayStack()
-        {
-            GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
-            commandRegistry.Clear();
-        }
-
         public void ProcessCommand(ICommand commandToProcess)
 		{
 			ExecuteCommand(commandToProcess);
@@ -29,8 +23,12 @@ namespace Command.Commands
 			if(!RegistryEmpty() && CommandBelongsToActivePlayer())
 			commandRegistry.Pop().Undo();
 		}
-
-		private bool RegistryEmpty() => commandRegistry.Count == 0;
+        private void SetReplayStack()
+        {
+            GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+            commandRegistry.Clear();
+        }
+        private bool RegistryEmpty() => commandRegistry.Count == 0;
 
         private bool CommandBelongsToActivePlayer()
         {
