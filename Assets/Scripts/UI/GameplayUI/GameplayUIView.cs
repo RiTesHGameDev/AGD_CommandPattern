@@ -84,7 +84,9 @@ namespace Command.UI
         {
             backgroundImage.gameObject.SetActive(true);
             backgroundImage.sprite = bgSprite;
-        } 
+        }
+        
+
     }
 
     [Serializable]

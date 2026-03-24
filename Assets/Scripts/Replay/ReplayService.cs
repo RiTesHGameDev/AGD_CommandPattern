@@ -11,7 +11,7 @@ namespace Replay
         private Stack<ICommand> replayCommandStack;
         public ReplayState replayState { get; private set; }
 
-        public ReplayService() => SetReplayState(ReplayState.Active);
+        public ReplayService() => SetReplayState(ReplayState.ACTIVE);
         public void SetReplayState(ReplayState stateToSet) => replayState = stateToSet;
 
         public void SetCommandStack(Stack<ICommand> commandToSet) => replayCommandStack = new Stack<ICommand>(commandToSet);
@@ -27,7 +27,7 @@ namespace Replay
 
     public enum ReplayState
     {
-        Active,
-        Deactive
+        ACTIVE,
+        DEACTIVE
     }
 }

@@ -6,7 +6,17 @@ namespace Command.Commands
 	public class CommandInvoker
 	{
 		private Stack<ICommand> commandRegistry = new Stack<ICommand>();
-		public void ProcessCommand(ICommand commandToProcess)
+		public CommandInvoker() => SubscribeToEvents();
+
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
+
+        private void SetReplayStack()
+        {
+            GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+            commandRegistry.Clear();
+        }
+
+        public void ProcessCommand(ICommand commandToProcess)
 		{
 			ExecuteCommand(commandToProcess);
 			RegisterCommand(commandToProcess);
